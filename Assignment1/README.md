@@ -40,6 +40,7 @@ Patients with a recorded stroke are older on average (67.7 years versus 42.0) an
 | `Task6_Basic_Kernel_SHAP_SVM.ipynb` | SVM explained with Kernel SHAP |
 | `Assignment Stroke_SHAP_Report.docx` | Written report with the figures and numbers |
 | `healthcare-dataset-stroke-data.csv` | Original dataset |
+| `images/` | Plots saved from the notebook runs and shown below |
 
 The notebooks follow the lecture scripts `00_data_exploration.py` and `03_shap.py`. They were run in Google Colab. Each modelling notebook uploads the original CSV and repeats the preprocessing. Do not replace the CSV with an already cleaned table. The cleaning code still expects the original column names.
 
@@ -58,6 +59,36 @@ The split is 80% training and 20% testing, `random_state = 2021`: 4,088 training
 ## Task 1: Exploratory data analysis
 
 `Task1_Exploratory_Data_Analysis.ipynb` prints the shape, `info`, histograms, missing values, stroke counts, category bar charts, and the stroke share by gender, hypertension, heart disease, and smoking status. It then shows the preprocessed table.
+
+Age, average glucose, and BMI:
+
+![Age histogram](images/task1_age.png)
+
+![Average glucose histogram](images/task1_avg_glucose.png)
+
+![BMI histogram](images/task1_bmi.png)
+
+Hypertension, heart disease, and the stroke class. Stroke = 1 is the short bar:
+
+![Hypertension histogram](images/task1_hypertension.png)
+
+![Heart disease histogram](images/task1_heart_disease.png)
+
+![Stroke class histogram](images/task1_stroke_hist.png)
+
+![Stroke class counts](images/task1_stroke_counts.png)
+
+Category counts:
+
+![Gender counts](images/task1_gender.png)
+
+![Marriage counts](images/task1_ever_married.png)
+
+![Work type counts](images/task1_work_type.png)
+
+![Residence counts](images/task1_residence.png)
+
+![Smoking status counts](images/task1_smoking_status.png)
 
 ## Task 2: Random Forest and TreeExplainer
 
@@ -93,6 +124,8 @@ Accuracy is high because most patients have no recorded stroke. The forest misse
 
 The probability falls from about 0.50 to 0.07. The largest downward contributions are glucose 72.56 (SHAP -0.220) and BMI 30.4 (SHAP -0.147). A positive SHAP value raises the stroke probability. A negative value lowers it. This is an explanation of the model, not a diagnosis.
 
+![Random Forest force plot for the first test patient](images/task3_force_plot.png)
+
 ## Task 4: Global summary plot
 
 `Task4_Summary_plot.ipynb` explains all 1,022 test patients. Mean absolute SHAP on the probability of stroke = 1:
@@ -106,6 +139,8 @@ The probability falls from about 0.50 to 0.07. The largest downward contribution
 | 5 | smoking_status_formerly smoked | 0.014 |
 
 On the summary plot, high age and high glucose generally raise the stroke probability. The test patient in Task 3 follows the glucose pattern. Age 70 would usually raise the probability, but for that one row the age contribution is near zero.
+
+![Random Forest SHAP summary plot on the test set](images/task4_summary_plot.png)
 
 ## Task 5: Three audience slides
 
@@ -133,6 +168,10 @@ A cover slide and a short closing slide are also in the file.
 | Confusion matrix | TN 787, FP 185, FN 29, TP 21 | TN 961, FP 11, FN 47, TP 3 |
 
 The SVM finds more of the recorded strokes and also raises many false alarms. For the same test patient, the SVM probability is 0.74, while the forest probability is 0.07. The SVM force plot shows standardised values, not the original age or BMI. Age is the leading feature in both explanations. The SVM global plot is only five patients, so it is not a full ranking of the test set.
+
+![SVM Kernel SHAP force plot for the same test patient](images/task6_force_plot.png)
+
+![SVM Kernel SHAP summary plot for five test patients](images/task6_summary_plot.png)
 
 ## How to run
 
